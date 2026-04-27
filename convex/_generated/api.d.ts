@@ -9,6 +9,7 @@
  */
 
 import type * as links from "../links.js";
+import type * as utils from "../utils.js";
 
 import type {
   ApiFromModules,
@@ -18,6 +19,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   links: typeof links;
+  utils: typeof utils;
 }>;
 
 /**

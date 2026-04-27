@@ -1,36 +1,51 @@
-"use client"
-import React from 'react'
-import {useState,useEffect} from 'react';
-import {Search,X} from 'lucide-react';
-import {useSearchStore} from '@/store/search-store';
-const SearchBar = () => {
-  const [value,setValue]=useState('');
-  const searchTerm=useSearchStore((state)=>state.setSearchTerm);
-  useEffect(()=>{
-   const timer=setTimeout(()=>{
-    searchTerm(value);
-   },300);
-   return ()=>clearTimeout(timer);
-  },[value,searchTerm]);
-  function handleClear(){
-    setValue('');
-    searchTerm('');
-  }
-  return (
-    <div className='relative w-full'>
-       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <Search className="h-4 w-4 text-gray-400" />
-      </div>
-      <input type="text" value={value} onChange={(e)=>setValue(e.target.value)} className='w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors text-gray-900' placeholder='Search by title, URL, or note...' />
-      {
-        value && (
-          <button onClick={handleClear} className="absolute inset-y-0 right-0 pr-3 flex items-center">
-          <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
-        </button>
-        )
-      }
-    </div>
-  )
-}
+"use client";
 
-export default SearchBar
+import { useState, useEffect } from "react";
+import { Search, X } from "lucide-react";
+import { useSearchStore } from "@/store/search-store";
+import { Input } from "@/components/ui/input";
+
+const SearchBar = () => {
+  const [value, setValue] = useState("");
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchTerm(value);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [value, setSearchTerm]);
+
+  function handleClear() {
+    setValue("");
+    setSearchTerm("");
+  }
+
+  return (
+    <div className="relative w-full">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <Search className="size-4 text-muted-foreground" data-testid="search-icon" />
+      </div>
+      <Input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        aria-label="Search links"
+        placeholder="Search by title, URL, or note..."
+        className="pl-9 pr-9 h-10"
+      />
+      {value && (
+        <button
+          type="button"
+          onClick={handleClear}
+          aria-label="Clear search"
+          className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <X className="size-4" data-testid="x-icon" />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default SearchBar;
