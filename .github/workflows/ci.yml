@@ -13,7 +13,9 @@ concurrency:
 env:
   NODE_VERSION: "20"
   NEXT_TELEMETRY_DISABLED: "1"
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_ci_placeholder
+  # Syntactically valid placeholder so Clerk's format check passes during `next build`
+  # (decodes to "clerk.ci.placeholder.dev$"). Not a real key — the app cannot authenticate.
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuY2kucGxhY2Vob2xkZXIuZGV2JA
   CLERK_SECRET_KEY: sk_test_ci_placeholder
   CLERK_FRONTEND_API_URL: https://example.clerk.accounts.dev
   CONVEX_DEPLOYMENT: dev:ci-placeholder
